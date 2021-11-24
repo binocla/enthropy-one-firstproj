@@ -1,60 +1,137 @@
-# enthropy-one-firstproj Project
+# Course 1 #
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+### Enthropy: Annihilation
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+![enthropy](https://sun9-37.userapi.com/impg/2768knmp1sOk_lSp5u1ewaNSP3wCOEKXVOLN8A/Y9ljTC55gVE.jpg?size=1900x1188&quality=96&sign=9bed2156e73d497275594c91d7fcaccb&type=album)
 
-## Running the application in dev mode
+## Условие ##
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./mvnw compile quarkus:dev
-```
+Binocla стремился к бесконечности.
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+*И будут знамения в солнце и луне и звездах, а на земле уныние народов и недоумение; и море восшумит и возмутится; люди
+будут издыхать от страха и ожидания бедствий, грядущих на вселенную, ибо силы небесные поколеблются*
 
-## Packaging and running the application
+Он смог. Смог добраться до черной дыры и рухнуть прямо в сингулярность. Отныне начинается путешествие по альтернативным
+реальностям, в каждой из которых **Binocla - другое существо**
 
-The application can be packaged using:
-```shell script
-./mvnw package
-```
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+Вам необходимо завести модели с правильными полями, опираясь на написанный код. Изменять код нельзя, только дополнять.
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+Единственная подсказка - *timeline и timeTravelling имеют Enum тип данных*
 
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
-```
+После этого Вам необходимо отправить GraphQL запросы для проверки модифицированных моделей на корректность.
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+**Вот некоторые из них**:
+-
 
-## Creating a native executable
+    query getBinoclasWithUniverse {
+        universe(universeId: 1) {
+            title
+            created
+            blackHoleEntry
+            interstellarIdentifier
+            timeline
+            binoclas {
+                name
+                height
+                mass
+                timeTravelling
+                alive
+            }
+        }
+    }
 
-You can create a native executable using: 
-```shell script
-./mvnw package -Pnative
-```
+Результат должен быть:
+-
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Pnative -Dquarkus.native.container-build=true
-```
+    {
+        "data": {
+        "universe": {
+        "title": "undefined",
+        "created": "-999999994-01-02",
+        "blackHoleEntry": "Unreachable Horizons A",
+        "interstellarIdentifier": 0,
+        "timeline": "MIXED",
+        "binoclas": [
+            {
+                "name": "unreachable",
+                "height": 1.7976931348623157e+308,
+                "mass": -1,
+                "timeTravelling": "MIXED",
+                "alive": true
+                    }
+                ]
+            }
+        }
+    }
 
-You can then execute your native executable with: `./target/enthropy-one-firstproj-1.0-runner`
+Еще один пример:
+- 
 
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
+    query allUniverses {
+        allUniverses {
+        title
+        created
+        blackHoleEntry
+        interstellarIdentifier
+        timeline
+        }
+    }
 
-## Related Guides
+С ответом:
+-
 
-- RESTEasy JAX-RS ([guide](https://quarkus.io/guides/rest-json)): REST endpoint framework implementing JAX-RS and more
+    {
+        "data": {
+        "allUniverses": [
+            {
+                "title": "The Discovery",
+                "created": "+15232-03-22",
+                "blackHoleEntry": "UI-51223c",
+                "interstellarIdentifier": -152521254879145,
+                "timeline": "REVERSED"
+            },
+            {
+                "title": "undefined",
+                "created": "-999999994-01-02",
+                "blackHoleEntry": "Unreachable Horizons A",
+                "interstellarIdentifier": 0,
+                "timeline": "MIXED"
+            },
+            {
+                "title": "Great Saint Extermination",
+                "created": "+999999-11-15",
+                "blackHoleEntry": "UI-951235123b-D",
+                "interstellarIdentifier": 152521879145,
+                "timeline": "NATURAL"
+            }
+            ]
+        }
+    }
 
-## Provided Code
+***Такие проверки должны быть для всех методов, описанных в UniverseResourse (allUniverses, getUniverse и
+getBinoclasWithUniverse как в 1 примере***
 
-### RESTEasy JAX-RS
+***Все такие запросы должны быть представлены в 3-х вариантах возвращения (например, где-то без title, где-то без
+нескольких полей...)***
 
-Easily start your RESTful Web Services
+## Запуск и проверка ##
 
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+> ./mvnw compile quarkus:dev, после - Enter или Ctrl+Enter (Windows)
+
+Или
+
+> mvn compile quarkus:dev, после - Enter или Ctrl+Enter (Windows)
+
+После этого необходимо открыть браузер (или любой другой клиент - curl, postman...), перейти
+на [localhost](http://localhost:8091/)
+или сразу на [http://localhost:8091/q/graphql-ui](http://localhost:8091/q/graphql-ui)
+и выполнить запросы. Если модели сделаны корректно - вы получите ответ выше
+
+**Для остановки проекта в консоли (где вводили команды выше) необходимо нажать Ctrl+C**
+
+***Внимание! Необязательно перезапускать проект при изменениях - это происходит за вас***
+
+## Мои контакты (если что-то совсем не получается или есть корректировки к условию) ##
+
+- **[VK](https://vk.com/binocla)**
+- **[Telegram](https://t.me/binocla)**
