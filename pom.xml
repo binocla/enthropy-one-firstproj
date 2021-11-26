@@ -114,7 +114,7 @@
             <artifactId>maven-failsafe-plugin</artifactId>
             <version>${surefire-plugin.version}</version>
             <executions>
-              <execution>
+            <execution>
                 <goals>
                   <goal>integration-test</goal>
                   <goal>verify</goal>
