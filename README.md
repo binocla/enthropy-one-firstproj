@@ -133,5 +133,4 @@ getBinoclasWithUniverse как в 1 примере***
 
 ## Мои контакты (если что-то совсем не получается или есть корректировки к условию) ##
 
-- **[VK](https://vk.com/binocla)**
-- **[Telegram](https://t.me/binocla)**
+- **[Telegram](https://t.me/binocladev)**
